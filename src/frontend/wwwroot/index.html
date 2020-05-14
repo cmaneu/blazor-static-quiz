@@ -47,13 +47,17 @@
     }
 
     document.addEventListener('visibilitychange', function () {
-        DotNet.invokeMethodAsync('BottomEngineering.Quizz.Services', 'OnFocusChanged', document.hidden);
+        DotNet.invokeMethodAsync('BlazorQuiz.FrontEnd', 'NotifyPageFocusChanged', JSON.stringify(document.hidden));
         if (document.hidden) {
             console.log('bye');
         } else {
             console.log('well back');
         }
     }, false);
+
+    document.addEventListener('mouseleave', e => {
+        DotNet.invokeMethodAsync('BlazorQuiz.FrontEnd', 'NotifyPageFocusChanged', 'mouseLeave');
+    });
 
 </script>
 </body>
