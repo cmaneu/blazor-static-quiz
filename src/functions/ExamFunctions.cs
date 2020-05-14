@@ -17,7 +17,8 @@ namespace BlazorQuiz.Functions
 {
     public static class ExamFunctions
     {
-        private static readonly string CollectionId = "AnswerLog";
+        private static readonly string AnswerCollectionId = "AnswerLog";
+        private static readonly string AnswerSheetCollectionId = "AnswerSheet";
 
         [FunctionName("GetSampleAnswer")]
         public static async Task<IActionResult> Run(
@@ -76,12 +77,20 @@ namespace BlazorQuiz.Functions
                 var db = response.Resource;
 
                 DocumentCollection collectionDefinition = new DocumentCollection();
-                collectionDefinition.Id = CollectionId;
+                collectionDefinition.Id = AnswerCollectionId;
                 collectionDefinition.PartitionKey.Paths.Add("/AnswerId");
 
                 DocumentCollection answerLogCollection = await client.CreateDocumentCollectionIfNotExistsAsync(
                     UriFactory.CreateDatabaseUri(dbName),
                     collectionDefinition);
+
+                DocumentCollection collection2Definition = new DocumentCollection();
+                collection2Definition.Id = AnswerSheetCollectionId;
+                collection2Definition.PartitionKey.Paths.Add("/Id");
+
+                DocumentCollection answer2LogCollection = await client.CreateDocumentCollectionIfNotExistsAsync(
+                    UriFactory.CreateDatabaseUri(dbName),
+                    collection2Definition);
             }
 
             return new OkObjectResult(new { Status = "Ok" });
@@ -106,11 +115,36 @@ namespace BlazorQuiz.Functions
 
             using (var client = new DocumentClient(new Uri(config["COSMOSDB_URI"]), config["COSMOSDB_KEY"]))
             {
-                Uri collectionUri = UriFactory.CreateDocumentCollectionUri(dbName, CollectionId);
+                Uri collectionUri = UriFactory.CreateDocumentCollectionUri(dbName, AnswerCollectionId);
                 await client.CreateDocumentAsync(collectionUri, req);
             }
 
             return new OkObjectResult(new {Status = "Ok"});
+        }
+
+        [FunctionName("endExam")]
+        public static async Task<IActionResult> EndExam(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "endExam")] AnswerSheet req,
+            ILogger log,
+            ExecutionContext context)
+        {
+            log.LogInformation($"End of exam for {req.Candidate.FirstName}.");
+
+            var config = new ConfigurationBuilder()
+                .SetBasePath(context.FunctionAppDirectory)
+                .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables()
+                .Build();
+
+            var dbName = config["COSMOSDB_DBNAME"];
+
+            using (var client = new DocumentClient(new Uri(config["COSMOSDB_URI"]), config["COSMOSDB_KEY"]))
+            {
+                Uri collectionUri = UriFactory.CreateDocumentCollectionUri(dbName, AnswerSheetCollectionId);
+                await client.CreateDocumentAsync(collectionUri, req);
+            }
+
+            return new OkObjectResult(new { Status = "Ok" });
         }
     }
 }

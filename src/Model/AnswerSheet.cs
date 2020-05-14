@@ -7,6 +7,12 @@ namespace BlazorQuiz.Model
 {
     public class AnswerSheet
     {
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
+
+        [JsonPropertyName("examId")]
+        public string ExamId { get; set; }
+
         [JsonPropertyName("candidate")]
         public Candidate Candidate { get; set; }
 
@@ -18,6 +24,9 @@ namespace BlazorQuiz.Model
 
         [JsonPropertyName("endedAt")]
         public DateTime EndedAt { get; set; }
+
+        [JsonPropertyName("log")]
+        public List<string> Log { get; set; } = new List<string>();
 
         public float Score { get; set; }
 

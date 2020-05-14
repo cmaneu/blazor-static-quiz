@@ -34,6 +34,8 @@ namespace BlazorQuiz.FrontEnd.Services
             _appState.CurrentExamLogo = CurrentExam.ExamImage;
             _appState.NotifyStateChanged();
             AnswerSheet = new AnswerSheet();
+            AnswerSheet.Id = Guid.NewGuid().ToString("N");
+            AnswerSheet.ExamId = examId;
         }
 
         public async Task<List<AnswerChoice>> LoadNextQuestionChoices()
@@ -69,6 +71,8 @@ namespace BlazorQuiz.FrontEnd.Services
         {
             AnswerSheet.EndedAt = DateTime.UtcNow;
             AnswerSheet.ComputeScore();
+            await _httpClient.PostAsJsonAsync($"{_appSettings.ApiBaseUrl}endExam",
+                AnswerSheet);
         }
     }
 }
