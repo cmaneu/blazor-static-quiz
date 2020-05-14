@@ -16,6 +16,7 @@ namespace BlazorQuiz.FrontEnd
             builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
             builder.Services.AddSingleton<ClientAppSettings>();
+            builder.Services.AddSingleton<AppState>();
 
             var host = builder.Build();
 

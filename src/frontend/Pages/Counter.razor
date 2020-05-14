@@ -1,4 +1,6 @@
 ﻿@page "/counter"
+@inject AppState AppState
+
 
 <h1>Counter</h1>
 
@@ -11,6 +13,9 @@
 
     private void IncrementCount()
     {
+        AppState.CurrentExamTitle = "Demo";
+        AppState.NotifyStateChanged();
+
         currentCount++;
     }
 }

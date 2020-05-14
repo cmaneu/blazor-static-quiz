@@ -1,15 +1,30 @@
 ﻿@inherits LayoutComponentBase
-
-<div class="sidebar">
-    <NavMenu />
-</div>
-
+@inject AppState AppState
 <div class="main">
     <div class="top-row px-4">
-        <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+        @AppState?.CurrentExamTitle - Blazor Quiz
     </div>
 
     <div class="content px-4">
         @Body
     </div>
 </div>
+
+
+@code
+{
+
+    protected override Task OnInitializedAsync()
+    {
+
+        AppState.OnChange += OnAppStateChanged;
+
+        return base.OnInitializedAsync();
+    }
+
+    private void OnAppStateChanged()
+    {
+        StateHasChanged();
+    }
+
+}
