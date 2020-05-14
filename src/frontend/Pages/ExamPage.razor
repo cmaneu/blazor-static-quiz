@@ -6,69 +6,70 @@
 @inject ClientAppSettings AppSettings
 @inject ExamService ExamService
 @inject NavigationManager NavManager
+@inject IJSRuntime JsRuntime
 
 <h3>ExamPage</h3>
 
 @if (ExamService.CurrentQuestion != null)
 {
-<div class="container">
-    <div class="row justify-content-md-center">
-        <div class="col col-lg-5 col-sm-5">
-            <div class="card-deck mb-3 text-center">
-                <div class="card mb-4 box-shadow">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">@ExamService.CurrentExam.ExamTitle - @ExamService.CurrentQuestion?.Id / @ExamService.CurrentExam.Questions.Count</h4>
-                    </div>
-                    <div class="card-body">
-                        <p class="mt-3 mb-4">
-                            @ExamService.CurrentQuestion?.Title
-
-                            @if (!string.IsNullOrEmpty(ExamService.CurrentQuestion?.ImageContents))
-                            {
-                                <img class="img-fluid" src="@ExamService.CurrentQuestion.ImageContents" />
-                            }
-
-                        </p>
-
-                        <hr />
-
-                        <div class="text-left">
-                            @if (Choices != null)
-                            {
-                                @foreach (var choice in Choices)
-                                {
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input " id="q-@choice.Id" @bind="choice.IsSelected">
-                                        <label class="custom-control-label" for="q-@choice.Id">@choice.Text</label>
-                                    </div>
-                                }
-                            }
-
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col col-lg-5 col-sm-5">
+                <div class="card-deck mb-3 text-center">
+                    <div class="card mb-4 box-shadow">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">@ExamService.CurrentExam.ExamTitle - @ExamService.CurrentQuestion?.Id / @ExamService.CurrentExam.Questions.Count</h4>
                         </div>
+                        <div class="card-body">
+                            <p class="mt-3 mb-4">
+                                @ExamService.CurrentQuestion?.Title
 
-                        <hr />
+                                @if (!string.IsNullOrEmpty(ExamService.CurrentQuestion?.ImageContents))
+                                {
+                                    <img class="img-fluid" src="@ExamService.CurrentQuestion.ImageContents" />
+                                }
 
-                        <div class="row">
-                            @*@if (CurrentQuestion.CanGoBack)
+                            </p>
+
+                            <hr />
+
+                            <div class="text-left">
+                                @if (Choices != null)
+                                {
+                                    @foreach (var choice in Choices)
+                                    {
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input " id="q-@choice.Id" @bind="choice.IsSelected">
+                                            <label class="custom-control-label" for="q-@choice.Id">@choice.Text</label>
+                                        </div>
+                                    }
+                                }
+
+                            </div>
+
+                            <hr />
+
+                            <div class="row">
+                                @*@if (CurrentQuestion.CanGoBack)
+                                    {
+                                        <div class="col-md-6">
+                                            <button type="button" class="btn btn-lg btn-block btn-outline-primary">Previous question</button>
+                                        </div>
+                                    }*@
+
+                                @if (ExamService.CurrentQuestion.CanGoForward)
                                 {
                                     <div class="col-md-6">
-                                        <button type="button" class="btn btn-lg btn-block btn-outline-primary">Previous question</button>
+                                        <button type="button" class="btn btn-lg btn-block btn-outline-primary" @onclick="ValidateCurrentQuestion">Next question</button>
                                     </div>
-                                }*@
-
-                            @if (ExamService.CurrentQuestion.CanGoForward)
-                            {
-                                <div class="col-md-6">
-                                    <button type="button" class="btn btn-lg btn-block btn-outline-primary" @onclick="ValidateCurrentQuestion">Next question</button>
-                                </div>
-                            }
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 }
 
 
@@ -82,6 +83,7 @@
     {
         await DisplayNextQuestion();
         await base.OnInitializedAsync();
+        await JsRuntime.InvokeVoidAsync("openFullscreen");
     }
 
     private async Task DisplayNextQuestion()
@@ -95,13 +97,14 @@
         }
         else
         {
-            StateHasChanged();    
+            StateHasChanged();
         }
     }
 
     private async Task EndExam()
     {
         await ExamService.EndExam();
+        await JsRuntime.InvokeVoidAsync("closeFullscreen");
         NavManager.NavigateTo("/results");
     }
 
