@@ -1,0 +1,125 @@
+﻿@page "/exam"
+@using BlazorQuiz.Model
+@using BlazorQuiz.FrontEnd.Services
+@inject AppState AppState
+@inject HttpClient HttpClient
+@inject ClientAppSettings AppSettings
+@inject ExamService ExamService
+@inject NavigationManager NavManager
+
+<h3>ExamPage</h3>
+
+@if (ExamService.CurrentQuestion != null)
+{
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col col-lg-5 col-sm-5">
+            <div class="card-deck mb-3 text-center">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">@ExamService.CurrentExam.ExamTitle - @ExamService.CurrentQuestion?.Id / @ExamService.CurrentExam.Questions.Count</h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="mt-3 mb-4">
+                            @ExamService.CurrentQuestion?.Title
+
+                            @if (!string.IsNullOrEmpty(ExamService.CurrentQuestion?.ImageContents))
+                            {
+                                <img class="img-fluid" src="@ExamService.CurrentQuestion.ImageContents" />
+                            }
+
+                        </p>
+
+                        <hr />
+
+                        <div class="text-left">
+                            @if (Choices != null)
+                            {
+                                @foreach (var choice in Choices)
+                                {
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input " id="q-@choice.Id" @bind="choice.IsSelected">
+                                        <label class="custom-control-label" for="q-@choice.Id">@choice.Text</label>
+                                    </div>
+                                }
+                            }
+
+                        </div>
+
+                        <hr />
+
+                        <div class="row">
+                            @*@if (CurrentQuestion.CanGoBack)
+                                {
+                                    <div class="col-md-6">
+                                        <button type="button" class="btn btn-lg btn-block btn-outline-primary">Previous question</button>
+                                    </div>
+                                }*@
+
+                            @if (ExamService.CurrentQuestion.CanGoForward)
+                            {
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-lg btn-block btn-outline-primary" @onclick="ValidateCurrentQuestion">Next question</button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+
+
+@code {
+    public List<AnswerChoice> Choices { get; set; }
+
+    // TODO: Compute and display exam progress
+
+    protected override async Task OnInitializedAsync()
+    {
+        await DisplayNextQuestion();
+        await base.OnInitializedAsync();
+    }
+
+    private async Task DisplayNextQuestion()
+    {
+        Choices = await ExamService.LoadNextQuestionChoices();
+
+        // Test if we're ending the exam.
+        if (Choices == null)
+        {
+            await EndExam();
+        }
+        else
+        {
+            StateHasChanged();    
+        }
+    }
+
+    private async Task EndExam()
+    {
+        await ExamService.EndExam();
+        NavManager.NavigateTo("/results");
+    }
+
+    private async Task ValidateCurrentQuestion()
+    {
+        var answer = new Answer()
+        {
+            AnsweredAt = DateTime.UtcNow,
+            CandidateId = AppState.CurrentCandidate.Email,
+            Choices = Choices,
+            Question = ExamService.CurrentQuestion
+        };
+
+        var isOk = answer.IsCorrect;
+
+        ExamService.SubmitQuestionAnswer(answer);
+
+        await DisplayNextQuestion();
+    }
+
+}

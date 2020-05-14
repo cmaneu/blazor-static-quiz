@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using BlazorQuiz.FrontEnd.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,6 +18,7 @@ namespace BlazorQuiz.FrontEnd
 
             builder.Services.AddSingleton<ClientAppSettings>();
             builder.Services.AddSingleton<AppState>();
+            builder.Services.AddSingleton<ExamService>();
 
             var host = builder.Build();
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json.Serialization;
 
 namespace BlazorQuiz.Model
@@ -9,8 +10,8 @@ namespace BlazorQuiz.Model
         [JsonPropertyName("candidate")]
         public Candidate Candidate { get; set; }
 
-        [JsonPropertyName("answers")]
-        public List<Answer> Answers { get; set; }
+        [JsonPropertyName("answers")] 
+        public List<Answer> Answers { get; set; } = new List<Answer>();
 
         [JsonPropertyName("startedAt")]
         public DateTime StartedAt { get; set; }
@@ -18,11 +19,11 @@ namespace BlazorQuiz.Model
         [JsonPropertyName("endedAt")]
         public DateTime EndedAt { get; set; }
 
-        public double Score { get; set; }
+        public float Score { get; set; }
 
         public void ComputeScore()
         {
-
+            Score = Answers.Count(a => a.IsCorrect) * 100 / Answers.Count;
         }
     }
 }

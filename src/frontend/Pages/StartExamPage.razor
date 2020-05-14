@@ -1,10 +1,13 @@
 ﻿@page "/{ExamId}/start"
 @page "/{ExamId}"
 @using BlazorQuiz.Model
+@using BlazorQuiz.FrontEnd.Services
 @inject HttpClient Http
 @inject AppState AppState
+@inject NavigationManager NavManager
+@inject ExamService ExamService
 
-@if (CurrentExam == null)
+@if (ExamService.CurrentExam == null)
 {
     <h3>Start Exam</h3>
     @if (!ExamLoadFailed)
@@ -20,15 +23,15 @@ else
 {
     <div class="container">
     <div class="row justify-content-md-center">
-    <div class="col col-lg-4 col-sm-">
+    <div class="col col-lg-5 col-sm-5">
     <div class="card-deck mb-3 text-center">
         <div class="card mb-4 box-shadow">
             <div class="card-header">
-                <h4 class="my-0 font-weight-normal">@CurrentExam.ExamTitle</h4>
+                <h4 class="my-0 font-weight-normal">@ExamService.CurrentExam.ExamTitle</h4>
             </div>
             <div class="card-body">
                 <p class="mt-3 mb-4">
-                    @CurrentExam.Questions.Count questions
+                    @ExamService.CurrentExam.Questions.Count questions
                 </p>
                 
                 <hr/>
@@ -47,7 +50,7 @@ else
 
                 <hr/>
 
-                @if (string.IsNullOrEmpty(CurrentExam.AccessCode))
+                @if (string.IsNullOrEmpty(ExamService.CurrentExam.AccessCode))
                 {
                     <button type="button" class="btn btn-lg btn-block btn-outline-primary" @onclick="StartExam">Start the exam</button>
                 }
@@ -74,8 +77,6 @@ else
     [Parameter]
     public string ExamId { get; set; }
 
-    public Exam CurrentExam { get; set; }
-
     public bool ExamLoadFailed { get; set; } = false;
 
     public string AccessCode { get; set; }
@@ -91,11 +92,8 @@ else
 
         try
         {
-            CurrentExam = await Http.GetFromJsonAsync<Exam>($"exam-data/{ExamId}.json");
-
-            AppState.CurrentExamTitle = CurrentExam.ExamTitle;
-            AppState.CurrentExamLogo = CurrentExam.ExamImage;
-            AppState.NotifyStateChanged();
+            await ExamService.LoadExam(ExamId);
+            
             StateHasChanged();
         }
         catch (Exception e)
@@ -107,14 +105,15 @@ else
 
     private void KeyPressed()
     {
-        if (AccessCode == CurrentExam.AccessCode)
+        if (AccessCode == ExamService.CurrentExam.AccessCode)
         {
             StartExam();
         }
     }
-    
+
     private void StartExam()
     {
-        throw new NotImplementedException();
+        AppState.CurrentCandidate = CurrentCandidate;
+        NavManager.NavigateTo("/exam");
     }
 }

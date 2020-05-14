@@ -5,7 +5,7 @@ namespace BlazorQuiz.Model
 {
     public partial class Question
     {
-        [JsonIgnore]
+        [JsonPropertyName("id")]
         public int Id { get; set; }
 
         [JsonPropertyName("title")]
@@ -20,11 +20,22 @@ namespace BlazorQuiz.Model
         [JsonPropertyName("choices")]
         public Choice[] Choices { get; set; }
 
+        [JsonPropertyName("canGoBack")] 
+        public bool CanGoBack { get; set; } = true;
+
+        [JsonPropertyName("canGoForward")]
+        public bool CanGoForward { get; set; } = true;
+
+        [JsonPropertyName("timeLimit")]
+        public int TimeLimit { get; set; }
+
         public IEnumerable<AnswerChoice> GetAnswerChoices()
         {
+            int id = 1;
             foreach (Choice choice in Choices)
             {
-                yield return AnswerChoice.FromChoice(choice);
+                yield return AnswerChoice.FromChoice(choice, id);
+                id++;
             }
         }
     }
