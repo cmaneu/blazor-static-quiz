@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30105.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorQuiz.FrontEnd", "src\frontend\BlazorQuiz.FrontEnd.csproj", "{341929B6-3CB9-4ABB-AC27-F5C8C39FFAF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorQuiz.Functions", "src\functions\BlazorQuiz.Functions.csproj", "{B43E476A-B8C0-4F42-98BF-68765C996C25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorQuiz.Functions", "src\functions\BlazorQuiz.Functions.csproj", "{B43E476A-B8C0-4F42-98BF-68765C996C25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorQuiz.Model", "src\Model\BlazorQuiz.Model.csproj", "{CA7E9BB6-9CC6-46EF-A27D-FDCD9F98BC83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B43E476A-B8C0-4F42-98BF-68765C996C25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B43E476A-B8C0-4F42-98BF-68765C996C25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B43E476A-B8C0-4F42-98BF-68765C996C25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA7E9BB6-9CC6-46EF-A27D-FDCD9F98BC83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA7E9BB6-9CC6-46EF-A27D-FDCD9F98BC83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA7E9BB6-9CC6-46EF-A27D-FDCD9F98BC83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA7E9BB6-9CC6-46EF-A27D-FDCD9F98BC83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
