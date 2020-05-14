@@ -1,0 +1,21 @@
+﻿@page "/results"
+@using BlazorQuiz.FrontEnd.Services
+@using BlazorQuiz.Model
+@inject ExamService ExamService
+<h3>Exam Results</h3>
+
+<p>Your Score:  @ExamService.AnswerSheet.Score</p>
+
+
+<div>
+    <p>Failed questions</p>
+    @foreach (var q in ExamService.AnswerSheet.Answers.Where(a => a.IsCorrect == false))
+    {
+        <p>@q.Question.Title</p>
+    }
+</div>
+
+
+@code {
+
+}
