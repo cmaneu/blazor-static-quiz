@@ -5,6 +5,8 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using BlazorQuiz.Model;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.JSInterop;
 
 namespace BlazorQuiz.FrontEnd.Services
 {
@@ -20,11 +22,14 @@ namespace BlazorQuiz.FrontEnd.Services
 
         public Question CurrentQuestion { get; set; }
 
+        private static ExamService Current;
+
         public ExamService(HttpClient httpClient, ClientAppSettings appSettings, AppState appState)
         {
             _httpClient = httpClient;
             _appSettings = appSettings;
             _appState = appState;
+            Current = this;
         }
 
         public async Task LoadExam(string examId)
@@ -73,6 +78,15 @@ namespace BlazorQuiz.FrontEnd.Services
             AnswerSheet.ComputeScore();
             await _httpClient.PostAsJsonAsync($"{_appSettings.ApiBaseUrl}endExam",
                 AnswerSheet);
+        }
+
+        [JSInvokable]
+        public static void NotifyPageFocusChanged(string currentFocus)
+        {
+            if (Current.AnswerSheet == null || Current.AnswerSheet.EndedAt < DateTime.UtcNow)
+                return;
+
+            Current.AnswerSheet.Log.Add($"Focus changed to {currentFocus} at {DateTime.UtcNow:F}");
         }
     }
 }
