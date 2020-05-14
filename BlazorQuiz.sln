@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorQuiz.FrontEnd", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorQuiz.Functions", "src\functions\BlazorQuiz.Functions.csproj", "{B43E476A-B8C0-4F42-98BF-68765C996C25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorQuiz.Model", "src\Model\BlazorQuiz.Model.csproj", "{CA7E9BB6-9CC6-46EF-A27D-FDCD9F98BC83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorQuiz.Model", "src\Model\BlazorQuiz.Model.csproj", "{CA7E9BB6-9CC6-46EF-A27D-FDCD9F98BC83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

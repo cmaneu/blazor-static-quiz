@@ -18,6 +18,6 @@ namespace BlazorQuiz.Model
         public string AccessCode { get; set; }
 
         [JsonPropertyName("questions")]
-        public List<Question> Questions { get; set; }
+        public List<Question> Questions { get; set; } = new List<Question>();
     }
 }
