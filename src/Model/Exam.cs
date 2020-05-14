@@ -14,6 +14,9 @@ namespace BlazorQuiz.Model
         [JsonPropertyName("examImage")]
         public string ExamImage { get; set; }
 
+        [JsonPropertyName("accessCode")]
+        public string AccessCode { get; set; }
+
         [JsonPropertyName("questions")]
         public List<Question> Questions { get; set; }
     }

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace BlazorQuiz.Model
 {
@@ -18,5 +19,13 @@ namespace BlazorQuiz.Model
 
         [JsonPropertyName("choices")]
         public Choice[] Choices { get; set; }
+
+        public IEnumerable<AnswerChoice> GetAnswerChoices()
+        {
+            foreach (Choice choice in Choices)
+            {
+                yield return AnswerChoice.FromChoice(choice);
+            }
+        }
     }
 }
