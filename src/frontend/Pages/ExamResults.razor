@@ -2,17 +2,46 @@
 @using BlazorQuiz.FrontEnd.Services
 @using BlazorQuiz.Model
 @inject ExamService ExamService
-<h3>Exam Results</h3>
 
-<p>Your Score:  @ExamService.AnswerSheet.Score</p>
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col col-lg-5 col-sm-5">
+            <div class="card-deck mb-3 text-center">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Exam Results</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">@ExamService.AnswerSheet.Score <small class="text-muted">%</small></h1>
+                        <p class="mt-3 mb-4">
+                            @ExamService.CurrentExam.Questions.Count questions
+                        </p>
+                        
+                        @if (ExamService.AnswerSheet.Score < 99)
+                        {
+                            <p class="mt-3 mb-4">
+                                <h5>Failed questions</h5>
+                                @foreach (var q in ExamService.AnswerSheet.Answers.Where(a => a.IsCorrect == false))
+                                {
+                                    <p class="border-info">@q.Question.Title
+                                        <ul class="list-unstyled mt-3 mb-4">
+                                            @foreach (var a in q.Choices.Where(a => a.IsCorrectChoice))
+                                            {
+                                                <li class="border-success">@a.Text</li>
+                                            }
+                                        </ul>
+                                    </p>
+                                    <hr/>
+                                }
 
+                            </p>
+                        }
 
-<div>
-    <p>Failed questions</p>
-    @foreach (var q in ExamService.AnswerSheet.Answers.Where(a => a.IsCorrect == false))
-    {
-        <p>@q.Question.Title</p>
-    }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
