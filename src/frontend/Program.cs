@@ -1,12 +1,8 @@
 using System;
 using System.Net.Http;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Text;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace BlazorQuiz.FrontEnd
 {
@@ -19,7 +15,14 @@ namespace BlazorQuiz.FrontEnd
 
             builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-            await builder.Build().RunAsync();
+            builder.Services.AddSingleton<ClientAppSettings>();
+
+            var host = builder.Build();
+
+            ClientAppSettings appSettings =  host.Services.GetService(typeof(ClientAppSettings)) as ClientAppSettings;
+            await appSettings.LoadAsync();
+
+            await host.RunAsync();
         }
     }
 }
