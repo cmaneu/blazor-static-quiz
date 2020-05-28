@@ -8,7 +8,10 @@
 
 
     <div class="container-fluid">
-        <h2>Exam Admin</h2>
+
+        <div class="row">
+            <h2>Exam Admin</h2>
+        </div>
 
         @if (Answers == null)
         {
@@ -32,27 +35,27 @@
                         <tbody>
                             @foreach (var answerSheet in Answers)
                             {
-                            <tr>
-                                <td>@answerSheet?.Candidate?.FirstName</td>
-                                <td>@answerSheet?.Candidate?.LastName</td>
-                                <td>@answerSheet?.EndedAt.ToString("U")</td>
-                                <td>@answerSheet?.Score %</td>
-                                <td>@if(answerSheet?.Log.Count > 0){ <span>!</span> }</td>
-                            </tr>
+                                <tr>
+                                    <td>@answerSheet?.Candidate?.FirstName</td>
+                                    <td>@answerSheet?.Candidate?.LastName</td>
+                                    <td>@answerSheet?.EndedAt.ToString("U")</td>
+                                    <td>@answerSheet?.Score %</td>
+                                    <td>
+                                        @if (answerSheet?.Log.Count > 0)
+                                        {
+                                            <span>!</span>
+                                        }
+                                    </td>
+                                </tr>
                             }
                         </tbody>
                     </table>
                 </div>
             </div>
-
-            <h3>Details per question</h3>
-
-
-            <h3>Details per student</h3>
-
         }
-    </div>
 
+
+    </div>
 
 
 
