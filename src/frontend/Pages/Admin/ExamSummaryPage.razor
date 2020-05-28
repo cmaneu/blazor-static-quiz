@@ -1,0 +1,85 @@
+﻿@page "/{ExamId}/_admin/"
+@using Microsoft.AspNetCore.WebUtilities
+@using BlazorQuiz.Model
+@using BlazorQuiz.FrontEnd.Services
+@using System.Security.Cryptography
+@inject NavigationManager NavManager
+@inject ExamService ExamService
+
+
+    <div class="container-fluid">
+        <h2>Exam Admin</h2>
+
+        @if (Answers == null)
+        {
+            <p>Loading</p>
+        }
+        else
+        {
+            <div class="row">
+                <h3>Summary</h3>
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Completed at</th>
+                                <th>Score</th>
+                                <th>Alert?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var answerSheet in Answers)
+                            {
+                            <tr>
+                                <td>@answerSheet?.Candidate?.FirstName</td>
+                                <td>@answerSheet?.Candidate?.LastName</td>
+                                <td>@answerSheet?.EndedAt.ToString("U")</td>
+                                <td>@answerSheet?.Score %</td>
+                                <td>@if(answerSheet?.Log.Count > 0){ <span>!</span> }</td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h3>Details per question</h3>
+
+
+            <h3>Details per student</h3>
+
+        }
+    </div>
+
+
+
+
+
+
+@code {
+    [Parameter]
+    public string ExamId { get; set; }
+
+    private string accessCode;
+
+    public List<AnswerSheet> Answers { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("code", out var queryParamValue))
+        {
+            accessCode = queryParamValue;
+        }
+
+        if(string.IsNullOrEmpty(accessCode))
+            NavManager.NavigateTo("/");
+
+        // Load data
+        Answers = await ExamService.AdminGetAnswers(ExamId, accessCode);
+        StateHasChanged();
+    }
+
+}

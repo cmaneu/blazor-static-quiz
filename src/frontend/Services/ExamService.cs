@@ -76,8 +76,13 @@ namespace BlazorQuiz.FrontEnd.Services
         {
             AnswerSheet.EndedAt = DateTime.UtcNow;
             AnswerSheet.ComputeScore();
-            await _httpClient.PostAsJsonAsync($"{_appSettings.ApiBaseUrl}endExam",
+            await _httpClient.PostAsJsonAsync($"{_appSettings.ApiBaseUrl}exam/{AnswerSheet.ExamId}/end",
                 AnswerSheet);
+        }
+
+        public async Task<List<AnswerSheet>> AdminGetAnswers(string examId, string accessToken)
+        {
+            return await _httpClient.GetFromJsonAsync<List<AnswerSheet>>($"{_appSettings.ApiBaseUrl}exam/{examId}/_admin/answers");
         }
 
         [JSInvokable]
