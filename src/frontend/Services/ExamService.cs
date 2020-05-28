@@ -88,10 +88,7 @@ namespace BlazorQuiz.FrontEnd.Services
         [JSInvokable]
         public static void NotifyPageFocusChanged(string currentFocus)
         {
-            if (Current.AnswerSheet == null || Current.AnswerSheet.EndedAt < DateTime.UtcNow)
-                return;
-
-            Current.AnswerSheet.Log.Add($"Focus changed to {currentFocus} at {DateTime.UtcNow:F}");
+            Current.AnswerSheet?.Log.Add($"Focus changed to {currentFocus} at {DateTime.UtcNow:F}");
         }
     }
 }
