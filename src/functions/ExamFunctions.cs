@@ -86,7 +86,7 @@ namespace BlazorQuiz.Functions
 
                 DocumentCollection collection2Definition = new DocumentCollection();
                 collection2Definition.Id = AnswerSheetCollectionId;
-                collection2Definition.PartitionKey.Paths.Add("/Id");
+                collection2Definition.PartitionKey.Paths.Add("/ExamId");
 
                 DocumentCollection answer2LogCollection = await client.CreateDocumentCollectionIfNotExistsAsync(
                     UriFactory.CreateDatabaseUri(dbName),
@@ -124,7 +124,8 @@ namespace BlazorQuiz.Functions
 
         [FunctionName("endExam")]
         public static async Task<IActionResult> EndExam(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "endExam")] AnswerSheet req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "exam/{examId}/end")] AnswerSheet req,
+            string examId,
             ILogger log,
             ExecutionContext context)
         {
@@ -145,6 +146,39 @@ namespace BlazorQuiz.Functions
             }
 
             return new OkObjectResult(new { Status = "Ok" });
+        }
+
+
+        [FunctionName("GetAnswers")]
+        public static async Task<IActionResult> GetAnswers(
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "exam/{examId}/_admin/answers")] HttpRequest req,
+            string examId,
+            ILogger log,
+            ExecutionContext context)
+        {
+            log.LogInformation("Request exam answers");
+
+            var config = new ConfigurationBuilder()
+                .SetBasePath(context.FunctionAppDirectory)
+                .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables()
+                .Build();
+
+            var dbName = config["COSMOSDB_DBNAME"];
+
+            using (var client = new DocumentClient(new Uri(config["COSMOSDB_URI"]), config["COSMOSDB_KEY"]))
+            {
+                Uri collectionUri = UriFactory.CreateDocumentCollectionUri(dbName, AnswerSheetCollectionId);
+                var query = $"SELECT * FROM c WHERE c.ExamId = \"{examId}\"";
+                log.LogInformation(query);
+
+                var crossPartition = new FeedOptions { EnableCrossPartitionQuery = true };
+                var documentsList = client.CreateDocumentQuery(collectionUri, query, crossPartition).ToList();
+
+                return new OkObjectResult(documentsList);
+            }
+
+            return new BadRequestResult();
         }
     }
 }
