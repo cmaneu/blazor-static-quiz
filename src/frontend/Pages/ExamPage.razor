@@ -1,6 +1,7 @@
 ﻿@page "/exam"
 @using BlazorQuiz.Model
 @using BlazorQuiz.FrontEnd.Services
+@using BlazorQuiz.FrontEnd.Components
 @inject AppState AppState
 @inject HttpClient HttpClient
 @inject ClientAppSettings AppSettings
@@ -64,6 +65,9 @@
                                     </div>
                                 }
                             </div>
+                            <div class="row">
+                                <QuestionTimerComponent CurrentQuestion="ExamService.CurrentQuestion" OnQuestionTimeOut="WhenQuestionTimedOut" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -78,6 +82,12 @@
     public List<AnswerChoice> Choices { get; set; }
 
     // TODO: Compute and display exam progress
+
+
+    public async void WhenQuestionTimedOut(EventArgs args)
+    {
+        await ValidateCurrentQuestion();
+    }
 
     protected override async Task OnInitializedAsync()
     {
