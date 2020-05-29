@@ -1,0 +1,68 @@
+﻿@using BlazorQuiz.Model
+@using System.Threading
+
+<p>Time Remaining: @countDown / @CurrentQuestion.TimeLimit</p>
+
+@code {
+
+    [Parameter]
+    public Question CurrentQuestion { get; set; }
+
+    [Parameter]
+    public int DefaultTimeLimit { get; set; }
+
+    [Parameter]
+    public EventCallback<EventArgs> OnQuestionTimeOut { get; set; }
+
+    private int currentQuestionId;
+
+    private int countDown = 0;
+
+    private CancellationTokenSource _timerCancel;
+
+    protected override async void OnParametersSet()
+    {
+        if (CurrentQuestion.Id == currentQuestionId)
+            return;
+
+        currentQuestionId = CurrentQuestion.Id;
+
+        StateHasChanged();
+
+        if (CurrentQuestion.TimeLimit == default(int))
+            return;
+
+        // Cancel previous task
+        countDown = CurrentQuestion.TimeLimit + 1;
+        StartTimer();
+    }
+
+
+    async Task StartTimer()
+    {
+        var startQuestionId = CurrentQuestion?.Id;
+
+        while (CurrentQuestion != null && countDown > 0)
+        {
+            // TODO: Fix this. This is horrible. Sorry.
+            if (startQuestionId != CurrentQuestion.Id)
+            {
+                countDown = 0;
+                return;
+            }
+
+            countDown -= 1;
+
+            if (countDown <= 0)
+            {
+                StateHasChanged();
+                await OnQuestionTimeOut.InvokeAsync(null);
+                return;
+            }
+
+            StateHasChanged();
+            await Task.Delay(1000);
+        }
+
+    }
+}
