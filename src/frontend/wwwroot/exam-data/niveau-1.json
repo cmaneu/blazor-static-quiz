@@ -1,0 +1,833 @@
+{
+   "id": "4fc885fdb1d34371972cc9d4b05d6d06",
+   "examTitle": "Examen Niveau 1",
+   "examImage": "data:image/png;base64,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",
+   "accessCode": "18365",
+   "questions": [
+      {
+         "id": 1,
+         "title": "Si un ballon a un volume de 20 litres en surface, quel sera son volume à 30 mètres de profondeur ?",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "5 L",
+               "correct": true
+            },
+            {
+               "text": "10 L",
+               "correct": false
+            },
+            {
+               "text": "20 L",
+               "correct": false
+            },
+            {
+               "text": "30 L",
+               "correct": false
+            }
+         ]
+      },
+      {
+         "id": 2,
+         "title": "Si j’ai une pression absolue de 1,8 bars, à quelle profondeur est-ce que je plonge ?",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "1,8 mètres",
+               "correct": false
+            },
+            {
+               "text": "8 mètres",
+               "correct": true
+            },
+            {
+               "text": "18 mètres",
+               "correct": false
+            },
+            {
+               "text": "28 mètres",
+               "correct": false
+            }
+         ]
+      },
+      {
+         "id": 3,
+         "title": "Si je mets 4 litres d’air dans un ballon de baudruche à 20 mètres, quel sera son volume en surface ?",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "5 L",
+               "correct": false
+            },
+            {
+               "text": "12 L",
+               "correct": true
+            },
+            {
+               "text": "20 L",
+               "correct": false
+            },
+            {
+               "text": "40 L",
+               "correct": false
+            }
+         ]
+      },
+      {
+         "id": 4,
+         "title": "Quelle est la pression relative à 19 mètres de profondeur ?",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "2,9 bars",
+               "correct": false
+            },
+            {
+               "text": "1,9 bars",
+               "correct": false
+            },
+            {
+               "text": "19 bars",
+               "correct": false
+            },
+            {
+               "text": "1 bar",
+               "correct": true
+            },
+            {
+               "text": "0,9 bars",
+               "correct": false
+            }
+         ]
+      },
+      {
+         "id": 5,
+         "title": "Quelle est la pression atmosphérique à 27 mètres ?",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "2,7 bars",
+               "correct": false
+            },
+            {
+               "text": "1,7 bars",
+               "correct": false
+            },
+            {
+               "text": "3,7 bars",
+               "correct": false
+            },
+            {
+               "text": "1 bar",
+               "correct": false
+            },
+            {
+               "text": "0,7 bar",
+               "correct": false
+            }
+         ]
+      },
+      {
+         "id": 6,
+         "title": "Lorsqu’un plongeur expire, le volume d’air de ses poumons diminue. Cela signifie que sa flottabilité est :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Plus grande",
+               "correct": false
+            },
+            {
+               "text": "Moins grande",
+               "correct": true
+            },
+            {
+               "text": "Pas modifiée",
+               "correct": false
+            }
+         ]
+      },
+      {
+         "id": 7,
+         "title": "Pour limiter mon impact sur l’environnement marin :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Je ne jette rien à la mer",
+               "correct": true
+            },
+            {
+               "text": "Je fixe bien tout mon matériel pour que rien ne s’accroche",
+               "correct": true
+            },
+            {
+               "text": "Je vérifie mon lestage",
+               "correct": true
+            },
+            {
+               "text": "Je fais attention à mon palmage",
+               "correct": true
+            }
+         ]
+      },
+      {
+         "id": 8,
+         "title": "Trouver l’intrus :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Fonds rocheux",
+               "correct": false
+            },
+            {
+               "text": "Tombants",
+               "correct": false
+            },
+            {
+               "text": "Herbiers",
+               "correct": false
+            },
+            {
+               "text": "Fonds sableux",
+               "correct": false
+            },
+            {
+               "text": "Remontants",
+               "correct": true
+            },
+            {
+               "text": "Épaves",
+               "correct": false
+            },
+            {
+               "text": "Grottes",
+               "correct": false
+            },
+            {
+               "text": "Lacs",
+               "correct": false
+            }
+         ]
+      },
+      {
+         "id": 9,
+         "title": "Le son se propage :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "A la même vitesse dans l’eau et dans l’air",
+               "correct": false
+            },
+            {
+               "text": "Plus vite dans l’air que dans l’eau",
+               "correct": false
+            },
+            {
+               "text": "Moins vite dans l’air que dans l’eau",
+               "correct": false
+            },
+            {
+               "text": "Plus vite dans l’eau que dans l’air",
+               "correct": true
+            }
+         ]
+      },
+      {
+         "id": 10,
+         "title": "En descendant, la première couleur qui disparaît est :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Le rouge",
+               "correct": true
+            },
+            {
+               "text": "Le bleu",
+               "correct": false
+            },
+            {
+               "text": "Le vert",
+               "correct": false
+            },
+            {
+               "text": "Le jaune",
+               "correct": false
+            }
+         ]
+      },
+      {
+         "id": 11,
+         "title": "Avec le masque, les objets apparaissent sous l’eau :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Plus près et moins gros",
+               "correct": false
+            },
+            {
+               "text": "Plus loin et moins petits",
+               "correct": false
+            },
+            {
+               "text": "Plus gros et plus près",
+               "correct": true
+            },
+            {
+               "text": "Plus près et plus petits",
+               "correct": false
+            }
+         ]
+      },
+      {
+         "id": 12,
+         "title": "Lorsque je plonge, je me refroidis :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "5 fois plus vite que dans l’air",
+               "correct": false
+            },
+            {
+               "text": "15 fois plus vite que dans l’air",
+               "correct": false
+            },
+            {
+               "text": "25 fois plus vite que dans l’air",
+               "correct": true
+            },
+            {
+               "text": "De ma même manière que dans l’air",
+               "correct": false
+            }
+         ]
+      },
+      {
+         "id": 13,
+         "title": "J’évite de plonger si je suis :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Fatigué(e)",
+               "correct": true
+            },
+            {
+               "text": "Contrarié(e)",
+               "correct": false
+            },
+            {
+               "text": "Essoufflé(e)",
+               "correct": true
+            },
+            {
+               "text": "Enrhumé(e)",
+               "correct": true
+            },
+            {
+               "text": "Alcoolisé(e)",
+               "correct": true
+            }
+         ]
+      },
+      {
+         "id": 14,
+         "title": "Les bouteilles de plongée contiennent :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "De l’oxygène",
+               "correct": false
+            },
+            {
+               "text": "De l’air normal",
+               "correct": true
+            },
+            {
+               "text": "Un mélange de trois gaz (oxygène, azote et hélium)",
+               "correct": false
+            }
+         ]
+      },
+      {
+         "id": 15,
+         "title": "Lorsque j’équipe ma bouteille, j’installe :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "La stab, puis le direct system, puis le détendeur",
+               "correct": false
+            },
+            {
+               "text": "Le détendeur, puis la stab, puis le direct system",
+               "correct": false
+            },
+            {
+               "text": "La stab, puis le détendeur, puis le direct system",
+               "correct": true
+            }
+         ]
+      },
+      {
+         "id": 16,
+         "title": "Avant de me mettre à l’eau, je dois vérifier :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "La pression du détendeur",
+               "correct": false
+            },
+            {
+               "text": "La pression de la bouteille",
+               "correct": true
+            },
+            {
+               "text": "Le bon fonctionnement du gilet",
+               "correct": true
+            },
+            {
+               "text": "Le bon fonctionnement de mes 2 détenteurs",
+               "correct": true
+            },
+            {
+               "text": "Le branchement correct du direct system",
+               "correct": true
+            }
+         ]
+      },
+      {
+         "id": 17,
+         "title": "Trouvez l’intrus :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Le canard",
+               "correct": false
+            },
+            {
+               "text": "La bascule arrière",
+               "correct": false
+            },
+            {
+               "text": "Le saut droit",
+               "correct": false
+            },
+            {
+               "text": "La roulade arrière",
+               "correct": true
+            },
+            {
+               "text": "Le départ plage",
+               "correct": false
+            },
+            {
+               "text": "Le phoque",
+               "correct": false
+            }
+         ]
+      },
+      {
+         "id": 18,
+         "title": "A la descente, les trois principaux espaces sensibles aux variations de pression sont :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Les sinus, les poumons et l’estomac",
+               "correct": false
+            },
+            {
+               "text": "Le masque, les oreilles et les sinus",
+               "correct": true
+            },
+            {
+               "text": "Les poumons, le masque et les oreilles",
+               "correct": false
+            }
+         ]
+      },
+      {
+         "id": 19,
+         "title": "Les barotraumatismes peuvent survenir :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "A la descente uniquement",
+               "correct": false
+            },
+            {
+               "text": "A la remontée uniquement",
+               "correct": false
+            },
+            {
+               "text": "Au fond seulement",
+               "correct": false
+            },
+            {
+               "text": "A la descente et à la remontée",
+               "correct": true
+            }
+         ]
+      },
+      {
+         "id": 20,
+         "title": "Si j’ai mal aux sinus en descendant, je dois :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Prévenir le moniteur et continuer à descendre",
+               "correct": false
+            },
+            {
+               "text": "Faire une manœuvre de Valsava et continuer à descendre",
+               "correct": false
+            },
+            {
+               "text": "Prévenir le moniteur, remonter légèrement, faire une manœuvre de Valsava et reprendre la descente",
+               "correct": true
+            },
+            {
+               "text": "Arrêter la plongée si ça « ne passe pas »",
+               "correct": false
+            }
+         ]
+      },
+      {
+         "id": 21,
+         "title": "Lorsque je remonte, je ne dois pas :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Bloquer ma respiration",
+               "correct": true
+            },
+            {
+               "text": "Inspirer normalement",
+               "correct": false
+            },
+            {
+               "text": "Insister sur l’expiration",
+               "correct": false
+            }
+         ]
+      },
+      {
+         "id": 22,
+         "title": "Si j’ai mal aux oreilles en remontant, je dois :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Attendre que ça passe, à la profondeur à laquelle je suis",
+               "correct": false
+            },
+            {
+               "text": "Prévenir le moniteur que « ça ne va pas » et continuer à remonter",
+               "correct": false
+            },
+            {
+               "text": "Dire au moniteur « ça ne va pas », redescendre de quelques mètres avec lui, avant de remonter doucement",
+               "correct": true
+            }
+         ]
+      },
+      {
+         "id": 23,
+         "title": "Le placage de masque :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Peut se produire lors de la descente",
+               "correct": true
+            },
+            {
+               "text": "Peut se produire lors de la remontée",
+               "correct": false
+            },
+            {
+               "text": "Peut être évité en soufflant régulièrement par le nez tout au long de la descente",
+               "correct": true
+            },
+            {
+               "text": "Peut être évité en ne serrant pas trop son masque",
+               "correct": true
+            }
+         ]
+      },
+      {
+         "id": 24,
+         "title": "en surface :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Je descends, ça va passer le temps d’arriver au fond",
+               "correct": false
+            },
+            {
+               "text": "Je ne descends pas, parce que la pression va aggraver l’essoufflement",
+               "correct": true
+            }
+         ]
+      },
+      {
+         "id": 25,
+         "title": "Lorsque je plonge en bouteille, je peux :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Remonter des coquillages, mais seulement s’ils sont vides pour avoir un souvenir",
+               "correct": false
+            },
+            {
+               "text": "Remonter les déchets que je trouve au fond",
+               "correct": true
+            },
+            {
+               "text": "Nourrir les animaux marins",
+               "correct": false
+            },
+            {
+               "text": "Faire la course avec les poissons",
+               "correct": false
+            }
+         ]
+      },
+      {
+         "id": 26,
+         "title": "au fond :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Je remonte immédiatement en pensant à bien expirer",
+               "correct": false
+            },
+            {
+               "text": "Je fais signe au moniteur ou à un membre de la palanquée",
+               "correct": true
+            },
+            {
+               "text": "Je palme très vite pour rejoindre le moniteur et le prévenir",
+               "correct": false
+            },
+            {
+               "text": "Je stoppe tout mouvement et j’expire profondément",
+               "correct": true
+            },
+            {
+               "text": "Je ne dis rien en attendant que ça passe, pas question d’arrêter la plongée",
+               "correct": false
+            }
+         ]
+      },
+      {
+         "id": 27,
+         "title": "Si je perds ma palanquée :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Je remonte tout de suite pour ne pas rester seul au fond",
+               "correct": false
+            },
+            {
+               "text": "J’attends à l’endroit où je suis que ma palanquée vienne me retrouver",
+               "correct": false
+            },
+            {
+               "text": "J’attends un peu au fond en regardant autour de moi si j’aperçois des bulles",
+               "correct": true
+            },
+            {
+               "text": "Je remonte à vitesse contrôlée, ma palanquée me rejoindra en surface",
+               "correct": true
+            },
+            {
+               "text": "Je continue ma plongée et je rejoins la première palanquée que je croise",
+               "correct": false
+            }
+         ]
+      },
+      {
+         "id": 28,
+         "title": "Lors de la remontée, je dois être :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Au même niveau que le moniteur",
+               "correct": false
+            },
+            {
+               "text": "En dessous du moniteur",
+               "correct": true
+            },
+            {
+               "text": "Au dessus du moniteur pour bien le voir",
+               "correct": false
+            },
+            {
+               "text": "Peu importe tant que je contrôle ma vitesse de remontée",
+               "correct": false
+            }
+         ]
+      },
+      {
+         "id": 29,
+         "title": "Les tables de plongée :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Ont été élaborées en fonction de tests faits par les plongeurs militaires",
+               "correct": true
+            },
+            {
+               "text": "Ne servent plus du tout en plongée aujourd’hui, parce que les ordinateurs de plongée existent",
+               "correct": false
+            },
+            {
+               "text": "Servent à connaître les paliers de décompression que le plongeur va devoir faire en fonction des paramètres de sa plongée (profondeur et temps)",
+               "correct": true
+            },
+            {
+               "text": "Permettent de contrôler l’évacuation de l’azote dissous dans le corps (désaturation)",
+               "correct": true
+            }
+         ]
+      },
+      {
+         "id": 30,
+         "title": "Les paliers de décompression se font :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Sur le bateau",
+               "correct": false
+            },
+            {
+               "text": "A la descente",
+               "correct": false
+            },
+            {
+               "text": "Au fond",
+               "correct": false
+            },
+            {
+               "text": "A la remontée",
+               "correct": true
+            },
+            {
+               "text": "Sous la douche",
+               "correct": false
+            }
+         ]
+      },
+      {
+         "id": 31,
+         "title": "Après une plongée en scaphandre, je peux :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Prendre l’avion, après 6 heures",
+               "correct": false
+            },
+            {
+               "text": "Faire de l’apnée, après au moins 3 heures",
+               "correct": false
+            },
+            {
+               "text": "Faire un jogging en trottinant doucement, parce que je ne fais pas un effort violent",
+               "correct": false
+            },
+            {
+               "text": "Aller boire l’apéro (avec modération)",
+               "correct": true
+            }
+         ]
+      },
+      {
+         "id": 32,
+         "title": "Que signifie FFESSM ?",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Fédération Francophone Des Enseignements Scientifiques Sous-Marines",
+               "correct": false
+            },
+            {
+               "text": "Fédération Française d’Études et des Sports Sous-Marins",
+               "correct": true
+            },
+            {
+               "text": "Formation Française aux Exercices, Sciences et Spécialités Maritimes",
+               "correct": false
+            },
+            {
+               "text": "Fondation Francophone et Européenne des Sportifs Sous-Mariniers",
+               "correct": false
+            }
+         ]
+      },
+      {
+         "id": 33,
+         "title": "Pour aller plonger dans un club FFESSM, je dois me munir de :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Ma carte d’identité et ma licence fédérale",
+               "correct": false
+            },
+            {
+               "text": "Ma licence fédérale, ma carte de niveau et mon certificat médical",
+               "correct": true
+            },
+            {
+               "text": "Ma carte de niveau et ma carte d’identité",
+               "correct": false
+            },
+            {
+               "text": "Mon certificat médical, ma carte de niveau et ma carte d’identité",
+               "correct": false
+            }
+         ]
+      },
+      {
+         "id": 34,
+         "title": "Pour plonger en exploration, mon certificat médical :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Peut être fait par un médecin généraliste",
+               "correct": true
+            },
+            {
+               "text": "Doit être fait par un médecin du sport",
+               "correct": false
+            },
+            {
+               "text": "Est valide tant que je n’ai pas d’accident ou de maladie grave",
+               "correct": true
+            },
+            {
+               "text": "Est valide pendant un an",
+               "correct": true
+            }
+         ]
+      },
+      {
+         "id": 35,
+         "title": "En tant que plongeur Niveau 1, je peux plonger :",
+         "timeLimit": 40,
+         "choices": [
+            {
+               "text": "Tout seul jusqu’à 6 mètres",
+               "correct": false
+            },
+            {
+               "text": "Avec un autre plongeur de même niveau jusqu’à 10 mètres",
+               "correct": false
+            },
+            {
+               "text": "Jusqu’à 20 mètres avec un guide de palanquée",
+               "correct": true
+            },
+            {
+               "text": "Jusqu’à 40 mètres avec un guide palanquée",
+               "correct": false
+            }
+         ]
+      }
+   ]
+}

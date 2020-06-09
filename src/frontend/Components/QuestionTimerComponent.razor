@@ -1,11 +1,12 @@
 ﻿@using BlazorQuiz.Model
 @using System.Threading
-
+@using BlazorQuiz.FrontEnd.Pages
+@inject Microsoft.Extensions.Localization.IStringLocalizer<StartExamPage> Loc
 
 @if (CurrentQuestion.TimeLimit != 0)
 {
     <p>
-        <span class="badge badge-light"> Time Remaining: <strong>@countDown</strong> seconds</span>
+        <span class="badge badge-light">@Loc["Time Remaining"]: <strong>@countDown</strong> @Loc["seconds"]</span>
     </p>
 }
 
