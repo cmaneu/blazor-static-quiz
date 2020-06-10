@@ -2,13 +2,14 @@
 @using BlazorQuiz.Model
 @using BlazorQuiz.FrontEnd.Services
 @using BlazorQuiz.FrontEnd.Components
+@using BlazorQuiz.FrontEnd.Resources
 @inject AppState AppState
 @inject HttpClient HttpClient
 @inject ClientAppSettings AppSettings
 @inject ExamService ExamService
 @inject NavigationManager NavManager
 @inject IJSRuntime JsRuntime
-@inject Microsoft.Extensions.Localization.IStringLocalizer<StartExamPage> Loc
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Localizations> Loc
 
 @if (ExamService.CurrentQuestion != null)
 {

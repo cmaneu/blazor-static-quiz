@@ -117,16 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Correct answer" xml:space="preserve">
+    <value>Correct answer</value>
+  </data>
+  <data name="Email Address" xml:space="preserve">
+    <value>Email Address</value>
+  </data>
+  <data name="Exam access code" xml:space="preserve">
+    <value>Exam access code</value>
+  </data>
   <data name="Exam is loading, please wait..." xml:space="preserve">
     <value>Exam is loading, please wait...</value>
+  </data>
+  <data name="Exam Results" xml:space="preserve">
+    <value>Exam Results</value>
   </data>
   <data name="exam-code-invalid" xml:space="preserve">
     <value>Your exam code is invalid</value>
   </data>
+  <data name="Failed questions" xml:space="preserve">
+    <value>Failed questions</value>
+  </data>
+  <data name="First Name" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="Last Name" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
   <data name="Next question" xml:space="preserve">
     <value>Next question</value>
   </data>
+  <data name="seconds" xml:space="preserve">
+    <value>seconds</value>
+  </data>
   <data name="Start Exam" xml:space="preserve">
     <value>Start Exam</value>
+  </data>
+  <data name="Start the exam" xml:space="preserve">
+    <value>Start the exam</value>
+  </data>
+  <data name="Time Remaining" xml:space="preserve">
+    <value>Time Remaining</value>
+  </data>
+  <data name="Your answer" xml:space="preserve">
+    <value>Your answer</value>
   </data>
 </root>

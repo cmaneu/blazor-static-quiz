@@ -2,11 +2,12 @@
 @page "/{ExamId}"
 @using BlazorQuiz.Model
 @using BlazorQuiz.FrontEnd.Services
+@using BlazorQuiz.FrontEnd.Resources
 @inject HttpClient Http
 @inject AppState AppState
 @inject NavigationManager NavManager
 @inject ExamService ExamService
-@inject Microsoft.Extensions.Localization.IStringLocalizer<StartExamPage> Loc
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Localizations> Loc
 
 @if (ExamService.CurrentExam == null)
 {

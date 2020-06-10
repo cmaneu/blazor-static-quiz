@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using BlazorQuiz.FrontEnd.Services;
@@ -21,23 +22,26 @@ namespace BlazorQuiz.FrontEnd
             builder.Services.AddSingleton<ClientAppSettings>();
             builder.Services.AddSingleton<AppState>();
             builder.Services.AddSingleton<ExamService>();
-            builder.Services.AddLocalization();
+            builder.Services.AddLocalization(options =>
+            {
+                options.ResourcesPath = "Resources";
+            });
 
-
+            
             var host = builder.Build();
 
             ClientAppSettings appSettings =  host.Services.GetService(typeof(ClientAppSettings)) as ClientAppSettings;
             await appSettings.LoadAsync();
 
 
-            var jsInterop = host.Services.GetRequiredService<IJSRuntime>();
-            var result = await jsInterop.InvokeAsync<string>("blazorCulture.get");
-            if (result != null)
-            {
-                var culture = new CultureInfo(result);
-                CultureInfo.DefaultThreadCurrentCulture = culture;
-                CultureInfo.DefaultThreadCurrentUICulture = culture;
-            }
+            //var jsInterop = host.Services.GetRequiredService<IJSRuntime>();
+            //var result = await jsInterop.InvokeAsync<string>("blazorCulture.get");
+            //if (result != null)
+            //{
+            var culture = new CultureInfo("fr-fr");
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
+            //}
 
             await host.RunAsync();
         }

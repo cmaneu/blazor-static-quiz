@@ -1,7 +1,8 @@
 ﻿@using BlazorQuiz.Model
 @using System.Threading
 @using BlazorQuiz.FrontEnd.Pages
-@inject Microsoft.Extensions.Localization.IStringLocalizer<StartExamPage> Loc
+@using BlazorQuiz.FrontEnd.Resources
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Localizations> Loc
 
 @if (CurrentQuestion.TimeLimit != 0)
 {
