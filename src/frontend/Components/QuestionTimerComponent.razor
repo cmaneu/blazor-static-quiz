@@ -26,10 +26,13 @@
 
     private int countDown = 0;
 
-    private CancellationTokenSource _timerCancel;
+    private Task _countdownTask;
+
+    private CancellationTokenSource _cts;
 
     protected override async void OnParametersSet()
     {
+        // If parameter get updated for the same question, ignore.
         if (CurrentQuestion.Id == currentQuestionId)
             return;
 
@@ -37,40 +40,60 @@
 
         StateHasChanged();
 
+
         if (CurrentQuestion.TimeLimit == default(int))
             return;
 
-        // Cancel previous task
         countDown = CurrentQuestion.TimeLimit + 1;
         StartTimer();
+
+    }
+
+    async Task StartTimer()
+    {
+        _cts?.Cancel();
+
+        _cts = new CancellationTokenSource();
+
+        TimerLoop(_cts.Token);
+
+        //waitingEvent.Reset();
+        //bool isQuestionAnswered = waitingEvent.Wait(CurrentQuestion.TimeLimit * 1000);
+
+        //if (!isQuestionAnswered)
+        //{
+        //    await OnQuestionTimeOut.InvokeAsync(null);
+        //}
     }
 
 
-    async Task StartTimer()
+    async Task TimerLoop(CancellationToken ctsToken)
     {
         var startQuestionId = CurrentQuestion?.Id;
 
         while (CurrentQuestion != null && countDown > 0)
         {
-            // TODO: Fix this. This is horrible. Sorry.
-            if (startQuestionId != CurrentQuestion.Id)
-            {
-                countDown = 0;
+            if(ctsToken.IsCancellationRequested)
                 return;
-            }
+
+            // TODO: Fix this. This is horrible. Sorry.
+            //if (startQuestionId != CurrentQuestion.Id)
+            //{
+            //    countDown = 0;
+            //    return;
+            //}
 
             countDown -= 1;
+            StateHasChanged();
 
             if (countDown <= 0)
             {
-                StateHasChanged();
                 await OnQuestionTimeOut.InvokeAsync(null);
+                StateHasChanged();
                 return;
             }
 
-            StateHasChanged();
             await Task.Delay(1000);
         }
-
     }
 }
