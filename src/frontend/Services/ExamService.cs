@@ -87,7 +87,7 @@ namespace BlazorQuiz.FrontEnd.Services
 
         public async Task<List<AnswerSheet>> AdminGetAnswers(string examId, string accessToken)
         {
-            return await _httpClient.GetFromJsonAsync<List<AnswerSheet>>($"{_appSettings.ApiBaseUrl}exam/{examId}/_admin/answers");
+            return await _httpClient.GetFromJsonAsync<List<AnswerSheet>>($"{_appSettings.ApiBaseUrl}exam/{examId}/_admin/answers?code={accessToken}");
         }
 
         [JSInvokable]
