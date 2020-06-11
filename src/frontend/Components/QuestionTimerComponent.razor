@@ -37,33 +37,21 @@
             return;
 
         currentQuestionId = CurrentQuestion.Id;
+        _cts?.Cancel();
 
         StateHasChanged();
-
 
         if (CurrentQuestion.TimeLimit == default(int))
             return;
 
         countDown = CurrentQuestion.TimeLimit + 1;
         StartTimer();
-
     }
 
     async Task StartTimer()
     {
-        _cts?.Cancel();
-
         _cts = new CancellationTokenSource();
-
         TimerLoop(_cts.Token);
-
-        //waitingEvent.Reset();
-        //bool isQuestionAnswered = waitingEvent.Wait(CurrentQuestion.TimeLimit * 1000);
-
-        //if (!isQuestionAnswered)
-        //{
-        //    await OnQuestionTimeOut.InvokeAsync(null);
-        //}
     }
 
 
