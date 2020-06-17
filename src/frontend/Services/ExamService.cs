@@ -49,7 +49,12 @@ namespace BlazorQuiz.FrontEnd.Services
                 ? CurrentExam.Questions.FirstOrDefault() 
                 : CurrentExam.Questions.ElementAtOrDefault(CurrentExam.Questions.IndexOf(CurrentQuestion) + 1);
 
-            return CurrentQuestion?.GetAnswerChoices().ToList();
+            var answers = CurrentQuestion?.GetAnswerChoices().ToList();
+
+            if (answers == null)
+                CurrentQuestion = null;
+
+            return answers;
         }
 
         public async void SubmitQuestionAnswer(Answer answer)

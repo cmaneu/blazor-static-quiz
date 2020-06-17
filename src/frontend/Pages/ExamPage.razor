@@ -74,14 +74,33 @@
     </div>
 }
 
+@if (Choices == null)
+{
+    <div class="container">
+    <div class="row justify-content-md-center">
+    <div class="col col-lg-5 col-sm-5">
+    <div class="card-deck mb-3 text-center">
+    <div class="card mb-4 box-shadow">
+        <div class="card-header">
+        <h4 class="my-0 font-weight-normal">@ExamService.CurrentExam.ExamTitle - Fin de l'examen</h4>
+        </div>
+        <div class="card-body">
+            <div class="spinner-border text-info" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+}
+
 
 
 @code {
     public List<AnswerChoice> Choices { get; set; }
-
-    // TODO: Compute and display exam progress
-
-
+    
     public async void WhenQuestionTimedOut(EventArgs args)
     {
         await ValidateCurrentQuestion();
@@ -101,6 +120,7 @@
         // Test if we're ending the exam.
         if (Choices == null)
         {
+            StateHasChanged();
             await EndExam();
         }
         else

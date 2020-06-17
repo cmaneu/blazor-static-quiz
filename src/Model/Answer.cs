@@ -7,7 +7,7 @@ namespace BlazorQuiz.Model
     public class Answer
     {
 
-        public string AnswerId => CandidateId + Question.Id;
+        public string AnswerId => CandidateId + Question?.Id;
 
         [JsonPropertyName("candidateId")]
         public string CandidateId { get; set; }
