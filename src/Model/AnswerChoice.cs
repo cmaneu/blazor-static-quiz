@@ -13,12 +13,14 @@ namespace BlazorQuiz.Model
 
         public static AnswerChoice FromChoice(Choice choice, int id)
         {
-            var answerChoice = new AnswerChoice();
-            answerChoice.Id = id;
-            answerChoice.Text = choice.Text;
-            answerChoice.IsCorrectChoice = choice.IsCorrectChoice;
-            answerChoice.ImageContents = choice.ImageContents;
-            answerChoice.Rationale = choice.Rationale;
+            var answerChoice = new AnswerChoice
+            {
+                Id = id,
+                Text = choice.Text,
+                IsCorrectChoice = choice.IsCorrectChoice,
+                ImageContents = choice.ImageContents,
+                Rationale = choice.Rationale
+            };
 
             return answerChoice;
         }

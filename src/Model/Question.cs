@@ -35,7 +35,7 @@ namespace BlazorQuiz.Model
             foreach (Choice choice in Choices)
             {
                 yield return AnswerChoice.FromChoice(choice, id);
-                id++;
+                id+= 1;
             }
         }
     }

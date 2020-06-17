@@ -52,6 +52,49 @@
                     </table>
                 </div>
             </div>
+
+            @if (AnswersLists != null)
+            {
+                <h3>Details</h3>
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm" data-sticky-header="true">
+                        <thead class="sticky-header">
+                        <tr>
+                            <th>Question</th>
+                            @foreach (var candidate in CandidateName)
+                            {
+                                <th>@candidate</th>
+                            }
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var answerSheet in AnswersLists)
+                        {
+                            <tr>
+                                <td>@answerSheet.Key</td>
+                               @foreach (var question in answerSheet.Value)
+                               {
+                                   <td>
+                                       @if (question)
+                                       {
+                                           <span class="badge badge-info">OK</span>    
+                                       }
+                                       else
+                                       {
+                                           <span class="badge badge-danger">Faux</span>    
+                                       }
+                                       
+                                       
+                                   </td>
+                               }
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            }
+
+
         }
 
 
@@ -69,6 +112,10 @@
 
     public List<AnswerSheet> Answers { get; set; }
 
+    public List<string> CandidateName { get; set; }
+
+    public Dictionary<int, List<bool>> AnswersLists { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
@@ -83,6 +130,48 @@
         // Load data
         Answers = await ExamService.AdminGetAnswers(ExamId, accessCode);
         StateHasChanged();
+
+        await ExamService.LoadExam(ExamId);
+
+
+        CandidateName = new List<string>();
+        AnswersLists = new Dictionary<int, List<bool>>();
+
+        foreach (var quest  in Answers.First().Answers)
+        {
+            AnswersLists.Add(quest?.Question?.Id ?? 0, new List<bool>());
+        }
+
+        foreach (var ans in Answers)
+        {
+            CandidateName.Add(ans.Candidate.FirstName);
+            ans.ComputeScore();
+            foreach (var currentAnswerr in ans.Answers)
+            {
+                AnswersLists[currentAnswerr.Question.Id].Add(QuestionAnsweredCorrectly(currentAnswerr));
+            }
+        }
+
+
+        StateHasChanged();
+    }
+
+
+    private bool QuestionAnsweredCorrectly(Answer currentAnswerr)
+    {
+        var originalQuestion = ExamService.CurrentExam.Questions.FirstOrDefault(q => q.Id == currentAnswerr.Question.Id);
+        if (originalQuestion == null)
+            return false;
+
+        for (int i = 0; i < currentAnswerr.Choices.Count; i++)
+        {
+            if (currentAnswerr.Choices[i].IsSelected != originalQuestion.Choices[i].IsCorrectChoice)
+                return false;
+
+
+        }
+
+        return true;
     }
 
 }
