@@ -1,11 +1,6 @@
 ﻿@page "/{ExamId}/start"
 @page "/{ExamId}"
-@using BlazorQuiz.Model
 @using BlazorQuiz.FrontEnd.Services
-@inject HttpClient Http
-@inject AppState AppState
-@inject NavigationManager NavManager
-@inject ExamService ExamService
 
 @if (ExamService.CurrentExam == null)
 {
@@ -21,99 +16,61 @@
 }
 else
 {
+
     <div class="container">
-    <div class="row justify-content-md-center">
-    <div class="col col-lg-5 col-sm-5">
-    <div class="card-deck mb-3 text-center">
-        <div class="card mb-4 box-shadow">
-            <div class="card-header">
-                <h4 class="my-0 font-weight-normal">@ExamService.CurrentExam.ExamTitle</h4>
-            </div>
-            <div class="card-body">
-                <p class="mt-3 mb-4">
-                    @ExamService.CurrentExam.Questions.Count questions
-                </p>
-                
-                <hr/>
-                <div class="form-group">
-                    <label for="firstName">First Name</label>
-                    <input type="text"class="form-control" @bind="CurrentCandidate.FirstName" id="firstName" placeholder="John">
-                </div>
-                <div class="form-group">
-                    <label for="lastName">Last Name</label>
-                    <input type="text"class="form-control" @bind="CurrentCandidate.LastName" id="lastName" placeholder="Doe">
-                </div>           
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="text"class="form-control" @bind="CurrentCandidate.Email" id="email" placeholder="j.doe@mail.com">
-                </div>
+        <div class="row justify-content-md-center">
+            <div class="col col-lg-5 col-sm-5">
+                <div class="card-deck mb-3 text-center">
+                    <div class="card mb-4 box-shadow">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">@ExamService.CurrentExam.ExamTitle</h4>
+                        </div>
+                        <div class="card-body">
+                            @switch (PageState)
+                            {
+                                case CurrentPageState.Identity:
+                                    <BlazorQuiz.FrontEnd.Pages.PageComponents.StartExamPageIdentityComponent CurrentCandidate="@CurrentCandidate" NumberOfQuestions="@ExamService.CurrentExam.Questions.Count" />
+                                    <button type="button" class="btn btn-lg btn-block btn-outline-info" @onclick="NextPageState">Next</button>
+                                    break;
+                                case CurrentPageState.Picture:
+                                    <h5>Candidate Picture</h5>
+                                    // TODO: Picture
+                                    <button type="button" class="btn btn-lg btn-block btn-outline-info" @onclick="NextPageState">Next</button>
+                                    break;
+                                case CurrentPageState.Contract:
+                                    <h5>Remote Exam contract</h5>
+                                    <ul>
+                                        <li>You confirm that you only have one screen attached to your device</li>
+                                        <li>You're conducting this exam in good faith, without any attemp to cheat</li>
+                                        <li>You're not impersonating someone, and/or use any help from anybody during this exam.</li>
+                                        <li>Your personal and exam data (incuding whenether you're switching windows, timings and clicks) will be securely stored for further analysis.</li>
+                                    </ul>
+                                    // TODO
+                                    <button type="button" class="btn btn-lg btn-block btn-outline-info" @onclick="NextPageState">Next</button>
+                                    break;
+                                case CurrentPageState.StartExam:
+                                    <h5>Are you ready?</h5>
+                                    <hr />
 
-                <hr/>
-
-                @if (string.IsNullOrEmpty(ExamService.CurrentExam.AccessCode))
-                {
-                    <button type="button" class="btn btn-lg btn-block btn-outline-primary" @onclick="StartExam">Start the exam</button>
-                }
-                else
-                {
-                    <div class="form-group">
-                        <label for="examAccessCode">Exam access code</label>
-                        <input type="text" autocomplete="off" class="form-control" @bind-value="AccessCode" id="examAccessCode" placeholder="Exam Access Code"  @bind-value:event="oninput" @onkeyup="KeyPressed">
+                                    @if (string.IsNullOrEmpty(ExamService.CurrentExam.AccessCode))
+                                    {
+                                        <button type="button" class="btn btn-lg btn-block btn-outline-primary" @onclick="StartExam">Start the exam</button>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group">
+                                            <label for="examAccessCode">Exam access code</label>
+                                            <input type="text" autocomplete="off" class="form-control" @bind-value="AccessCode" id="examAccessCode" placeholder="Exam Access Code" @bind-value:event="oninput" @onkeyup="KeyPressed">
+                                        </div>
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                        </div>
                     </div>
-                }
-
+                </div>
             </div>
         </div>
     </div>
-    </div>
-    </div>
-    </div>
-}
-
-
-
-@code {
-
-    [Parameter]
-    public string ExamId { get; set; }
-
-    public bool ExamLoadFailed { get; set; } = false;
-
-    public string AccessCode { get; set; }
-
-    public Candidate CurrentCandidate { get; set; } = new Candidate();
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await base.OnAfterRenderAsync(firstRender);
-
-        if (!firstRender)
-            return;
-
-        try
-        {
-            await ExamService.LoadExam(ExamId);
-            
-            StateHasChanged();
-        }
-        catch (Exception e)
-        {
-            ExamLoadFailed = true;
-        }
-
-    }
-
-    private void KeyPressed()
-    {
-        if (AccessCode == ExamService.CurrentExam.AccessCode)
-        {
-            StartExam();
-        }
-    }
-
-    private void StartExam()
-    {
-        AppState.CurrentCandidate = CurrentCandidate;
-        NavManager.NavigateTo("/exam");
-    }
 }
